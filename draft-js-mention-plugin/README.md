@@ -44,3 +44,56 @@ Follow the steps below to import the css file by using Webpack's `style-loader` 
 ### Browserify Usage
 
 TODO: PR welcome
+
+
+### Changes made on 09.14.2016
+
+- Downgraded base version of `draft-js-mention-plugin` to `1.1.2` due to the buginess of beta versions `2.0.0` (currently they're on beta 4)
+- Made change to mention plugin to fix selecting a mention from the `MentionSuggestions` list in iOS Safari:
+
+```
+  draft-js-mention-plugin/src/MentionSuggestions/Entry/index.js
+
+  // Added getUserAgent context type to target mobile for event handlers when
+  // selecting mention from list
+  static contextTypes = {
+    getUserAgent: PropTypes.func
+  };
+
+  // Created onTouchStart handler for mobile to trigger selecting mention from list
+  // onMouseDown and onMouseUp not being triggered in mobile Safari
+  onTouchStart = (event) => {
+    // Without this, any links/buttons/actions/etc. that may be directly underneath the mention element
+    // you are tapping on will trigger and execute.
+    event.preventDefault();
+
+    this.props.onMentionSelect(this.props.mention);
+  };
+
+  // If mobile device, use onTouchStart to trigger mention select
+  // Otherwise, use original onMouseDown/onMouseUp/onMouseEnter
+  let selectMentionHandlers;
+
+  if (this.context.getUserAgent().isMobile) {
+    selectMentionHandlers = {
+      onTouchStart: this.onTouchStart
+    };
+  } else {
+    selectMentionHandlers = {
+      onMouseDown: this.onMouseDown,
+      onMouseUp: this.onMouseUp,
+      onMouseEnter: this.onMouseEnter
+    };
+  }
+
+  return (
+    <div
+      className={className}
+      {...selectMentionHandlers}
+      role="option"
+    >
+      <Avatar mention={this.props.mention} theme={theme} />
+      <span className={theme.mentionSuggestionsEntryText}>{this.props.mention.get('name')}</span>
+    </div>
+  );
+```
