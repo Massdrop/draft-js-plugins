@@ -1,6 +1,6 @@
 {
-  "name": "draft-js-mention-plugin",
-  "version": "2.0.0-beta.2",
+  "name": "@massdrop/draft-js-mention-plugin",
+  "version": "1.1.3",
   "description": "Mention Plugin for DraftJS",
   "author": {
     "name": "Nik Graf",
