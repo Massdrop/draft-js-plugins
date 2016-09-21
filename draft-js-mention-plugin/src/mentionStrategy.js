@@ -1,4 +1,4 @@
-import { Entity } from 'draft-js';
+import { Entity } from '@massdrop/draft-js';
 
 const findMention = (character) => {
   const entityKey = character.getEntity();

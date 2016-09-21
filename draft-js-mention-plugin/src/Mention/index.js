@@ -1,5 +1,5 @@
 import React from 'react';
-import { Entity } from 'draft-js';
+import { Entity } from '@massdrop/draft-js';
 import { fromJS } from 'immutable';
 
 const Mention = (props) => {

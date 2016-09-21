@@ -1,4 +1,4 @@
-import { Modifier, EditorState, Entity } from 'draft-js';
+import { Modifier, EditorState, Entity } from '@massdrop/draft-js';
 import getSearchText from '../utils/getSearchText';
 
 const addMention = (editorState, mention, entityMutability) => {
