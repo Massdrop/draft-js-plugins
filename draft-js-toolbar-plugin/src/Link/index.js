@@ -1,5 +1,5 @@
 import React from 'react';
-import { Entity } from 'draft-js';
+import { Entity } from '@massdrop/draft-js';
 
 const Link = (props) => {
   const { href } = Entity.get(props.entityKey).getData();

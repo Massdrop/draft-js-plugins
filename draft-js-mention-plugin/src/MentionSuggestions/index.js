@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import Entry from './Entry';
 import addMention from '../modifiers/addMention';
 import decodeOffsetKey from '../utils/decodeOffsetKey';
-import { genKey } from 'draft-js';
+import { genKey } from '@massdrop/draft-js';
 import getSearchText from '../utils/getSearchText';
 
 export default class MentionSuggestions extends Component {

@@ -1,4 +1,4 @@
-import { RichUtils } from 'draft-js';
+import { RichUtils } from '@massdrop/draft-js';
 import defaultInlineStyles from '../actions/inlineStyles';
 import defaultActions from '../actions/custom';
 import getSelection from '../utils/getSelection';

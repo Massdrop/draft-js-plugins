@@ -1,4 +1,4 @@
-import { Entity } from 'draft-js';
+import { Entity } from '@massdrop/draft-js';
 
 function findLinkEntities(contentBlock, callback) {
   contentBlock.findEntityRanges(

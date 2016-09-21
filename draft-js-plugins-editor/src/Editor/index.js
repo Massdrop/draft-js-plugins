@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Editor,
   EditorState,
-} from 'draft-js';
+} from '@massdrop/draft-js';
 
 import createCompositeDecorator from './createCompositeDecorator';
 import moveSelectionToEnd from './moveSelectionToEnd';
