@@ -1,6 +1,6 @@
 # DraftJS Plugins
 
-![Draft JS Plugins Logo](https://dl.dropboxusercontent.com/u/40735/draft-js-plugins.svg)
+![Draft JS Plugins Logo](http://static.nikgraf.com/draft-js-plugins/draft-js-plugins.svg)
 
 High quality plugins with great UX on top of [DraftJS](https://github.com/facebook/draft-js).
 
@@ -8,25 +8,49 @@ High quality plugins with great UX on top of [DraftJS](https://github.com/facebo
 
 ## Important Note
 
-We currently prepare for a 2.0 beta. The `master` branch already contains these features. All the packages are already published with a beta tag. Install it via `$ npm install <plugin>@2.0.0-beta.2 --save`
+We are currently preparing for a 2.0 release. The `master` branch contains these features. All the packages are already published with a beta tag. Install it via `$ npm install <plugin>@2.0.0-rc8 --save`.
+
+## Roadmap
+
+In case you are interested in helping [Issue #329](https://github.com/draft-js-plugins/draft-js-plugins/issues/329) contains a roadmap of what's coming in 2.0 and beyond.
 
 ## Available Plugins (incl. Docs)
 
-- [Emoji](https://www.draft-js-plugins.com/plugin/emoji)
-- [Stickers](https://www.draft-js-plugins.com/plugin/sticker)
-- [Hashtags](https://www.draft-js-plugins.com/plugin/hashtag)
-- [Linkify](https://www.draft-js-plugins.com/plugin/linkify)
-- [Mentions](https://www.draft-js-plugins.com/plugin/mention)
+- [Alignment](https://www.draft-js-plugins.com/plugin/alignment)
 - [Counter](https://www.draft-js-plugins.com/plugin/counter)
+- [Drag and Drop](https://www.draft-js-plugins.com/plugin/drag-n-drop)
+- [Emoji](https://www.draft-js-plugins.com/plugin/emoji)
+- [Focus](https://www.draft-js-plugins.com/plugin/focus)
+- [Hashtag](https://www.draft-js-plugins.com/plugin/hashtag)
+- [Image](https://www.draft-js-plugins.com/plugin/image)
+- [Inline Toolbar](https://www.draft-js-plugins.com/plugin/inline-toolbar)
+- [Linkify](https://www.draft-js-plugins.com/plugin/linkify)
+- [Mention](https://www.draft-js-plugins.com/plugin/mention)
+- [Resizeable](https://www.draft-js-plugins.com/plugin/resizeable)
+- [Side Toolbar](https://www.draft-js-plugins.com/plugin/side-toolbar)
+- [Sticker](https://www.draft-js-plugins.com/plugin/sticker)
 - [Undo](https://www.draft-js-plugins.com/plugin/undo)
+- [Video](https://www.draft-js-plugins.com/plugin/video)
 - or build your own … :)
 
 ### Built by the community
 
 - [Autolist](https://github.com/icelab/draft-js-autolist-plugin) by [Max Wheeler/Icelab](https://github.com/makenosound)
 - [Block Breakout](https://github.com/icelab/draft-js-block-breakout-plugin) by [Max Wheeler/Icelab](https://github.com/makenosound)
+- [Markdown Shortcuts](https://github.com/ngs/draft-js-markdown-shortcuts-plugin/) by [Atsushi Nagase](https://github.com/ngs)
 - [Single Line](https://github.com/icelab/draft-js-single-line-plugin) by [Max Wheeler/Icelab](https://github.com/makenosound)
 - [RichButtons](https://github.com/jasonphillips/draft-js-richbuttons-plugin) by [jasonphillips](https://github.com/jasonphillips)
+- [Katex](https://github.com/letranloc/draft-js-katex-plugin) by [letranloc](https://github.com/letranloc)
+- [Mathjax](https://github.com/efloti/draft-js-mathjax-plugin) by [efloti](https://github.com/efloti)
+- [Buttons](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
+- [Color Picker](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
+- [Embed](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
+- [EmojiPicker](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
+- [GifPicker](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
+- [Link](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
+- [Modal](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
+- [Sidebar](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
+- [Toolbar](https://github.com/vacenz/last-draft-js-plugins) by [StevenIseki](https://github.com/StevenIseki)
 
 ## Live Example & Documentation
 
@@ -43,7 +67,7 @@ $ npm install draft-js-plugins-editor --save
 To try out the beta version of 2.0.0 run
 
 ```
-$ npm install draft-js-plugins-editor@2.0.0-beta.2 --save
+$ npm install draft-js-plugins-editor@2.0.0-rc8 --save
 ```
 
 Then import the editor somewhere in your code and you're ready to go!
@@ -58,14 +82,17 @@ import Editor from 'draft-js-plugins-editor';
 
 #### Editor
 
-An editor component accepting plugins.
+An editor component accepting plugins. [see source](https://github.com/draft-js-plugins/draft-js-plugins/blob/master/draft-js-plugins-editor/src/Editor/index.js#L16)
 
 | Props                                          | Description  | Required
 | -----------------------------------------------|:------------:| -------:|
 | editorState                                    | [see here](https://facebook.github.io/draft-js/docs/api-reference-editor-state.html#content)| * |
 | onChange                                       | [see here](https://facebook.github.io/draft-js/docs/api-reference-editor.html#onchange)| * |
 | plugins                                        | an array of plugins |  |
-| all other props accepted by the DraftJS Editor | [see here](https://facebook.github.io/draft-js/docs/api-reference-editor.html#props) |  |
+| decorators                                     | an array of custom decorators |  |
+| defaultKeyBindings                             | bool |  |
+| defaultBlockRenderMap                          | bool |  |
+| all other props accepted by the DraftJS Editor except decorator | [see here](https://facebook.github.io/draft-js/docs/api-reference-editor.html#props) |  |
 
 Usage:
 
@@ -102,7 +129,6 @@ export default class UnicornEditor extends Component {
         editorState={this.state.editorState}
         onChange={this.onChange}
         plugins={plugins}
-        ref="editor"
       />
     );
   }
@@ -111,14 +137,24 @@ export default class UnicornEditor extends Component {
 
 #### How to write a Plugin
 
-Feel free to copy any of the existing plugins as a starting point.In this repository you also can find a [Guide](https://github.com/draft-js-plugins/draft-js-plugins/blob/master/HOW_TO_CREATE_A_PLUGIN.md) on how to create a plugin including a description of the supported features. In addition you can contact [@nikgraf](https://github.com/nikgraf) directly in case you need help or simply open a Github Issue!
+Feel free to copy any of the existing plugins as a starting point.In this repository you can also find a [Guide](https://github.com/draft-js-plugins/draft-js-plugins/blob/master/HOW_TO_CREATE_A_PLUGIN.md) on how to create a plugin, including a description of the supported features. In addition you can contact [@nikgraf](https://github.com/nikgraf) directly in case you need help or simply open a Github Issue!
 
 ## Discussion and Support
-Join the channel #draft-js-plugins after signing into the DraftJS [Slack organization](https://draftjs.herokuapp.com) or check out or collection of frequently asked questions here: [FAQ](https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md).
+Join the channel #draft-js-plugins after signing into the DraftJS [Slack organization](https://draftjs.herokuapp.com) or check out our collection of frequently asked questions here: [FAQ](https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md).
 
 ## Development
 
 Check out our [Contribution Guide](https://github.com/draft-js-plugins/draft-js-plugins/blob/master/CONTRIBUTING.md).
+
+## Learn about why Draft.js and how to use DraftJS Plugins
+
+In this talk Nik Graf explained the ContentState structure of a Draft.js Editor as well as explained how to use plugins.
+
+[<img width="450" src="http://img.youtube.com/vi/gxNuHZXZMgs/maxresdefault.jpg" >](https://www.youtube.com/watch?v=gxNuHZXZMgs)
+
+## Maintainers
+
+This project was initiated by [Nik Graf](https://twitter.com/nikgraf) and is maintained by [Julian Krispel](https://twitter.com/juliandoesstuff). Julian is a draft.js consultant and available for hire, you can get in touch with him on his website, [react rocket](https://reactrocket.com)
 
 ## License
 

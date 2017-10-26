@@ -1,13 +1,13 @@
+import decorateComponentWithProps from 'decorate-component-with-props';
 import Hashtag from './Hashtag';
 import hashtagStrategy from './hashtagStrategy';
 import styles from './styles.css';
-import decorateComponentWithProps from 'decorate-component-with-props';
 
 const defaultTheme = {
   hashtag: styles.hashtag,
 };
 
-const hashtagPlugin = (config = {}) => {
+export default (config = {}) => {
   // Styles are overwritten instead of merged as merging causes a lot of confusion.
   //
   // Why? Because when merging a developer needs to know all of the underlying
@@ -24,5 +24,3 @@ const hashtagPlugin = (config = {}) => {
     ],
   };
 };
-
-export default hashtagPlugin;

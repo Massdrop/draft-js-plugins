@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-export default class GithubStarButton extends Component {
+export default class GithubButton extends Component {
 
   componentDidMount() {
-    const githubButton = this.refs.githubButton;
     const githubScript = document.createElement('script');
     githubScript.src = '//buttons.github.io/buttons.js';
     githubScript.id = 'github-bjs';
-    githubButton.parentNode.appendChild(githubScript);
+    this.githubButton.parentNode.appendChild(githubScript);
   }
 
   shouldComponentUpdate = () => false;
@@ -20,21 +19,17 @@ export default class GithubStarButton extends Component {
   }
 
   render() {
-    const size = this.props.size ? this.props.size : 'default'; // 'mega' is the other option
     const text = this.props.text ? this.props.text : 'Github';
-
-    // TODO make name & repo dynamic
+    const { user, repo, size } = this.props;
 
     // Note: all of the attributes including the className 'github-button' are required
     return (
       <a
-        ref="githubButton"
+        ref={(element) => { this.githubButton = element; }}
         className="github-button"
-        href="https://github.com/draft-js-plugins/draft-js-plugins"
-        data-style={size}
-        data-count-href="/draft-js-plugins/draft-js-plugins/stargazers"
-        data-count-api="/repos/draft-js-plugins/draft-js-plugins#stargazers_count"
-        data-count-aria-label="# stargazers on GitHub"
+        href={`https://github.com/${user}/${repo}`}
+        data-size={size}
+        data-show-count="true"
         aria-label="Star draft-js-plugins/draft-js-plugins on GitHub"
       >
         {text}

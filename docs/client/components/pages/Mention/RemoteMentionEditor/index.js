@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { EditorState } from 'draft-js';
-import Editor from 'draft-js-plugins-editor'; // eslint-disable-line import/no-unresolved
-import createMentionPlugin from 'draft-js-mention-plugin'; // eslint-disable-line import/no-unresolved
-import editorStyles from './editorStyles.css';
-import { fromJS } from 'immutable';
 
-const mentionPlugin = createMentionPlugin();
-const { MentionSuggestions } = mentionPlugin;
-const plugins = [mentionPlugin];
+import Editor from 'draft-js-plugins-editor';
+
+import createMentionPlugin from 'draft-js-mention-plugin';
+import editorStyles from './editorStyles.css';
 
 export default class SimpleMentionEditor extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.mentionPlugin = createMentionPlugin();
+  }
+
   state = {
     editorState: EditorState.createEmpty(),
-    suggestions: fromJS([]),
+    suggestions: [],
   };
 
   onChange = (editorState) => {
@@ -39,23 +42,26 @@ export default class SimpleMentionEditor extends Component {
       .then((response) => response.json())
       .then((data) => {
         this.setState({
-          suggestions: fromJS(data),
+          suggestions: data,
         });
       });
   };
 
   focus = () => {
-    this.refs.editor.focus();
+    this.editor.focus();
   };
 
   render() {
+    const { MentionSuggestions } = this.mentionPlugin;
+    const plugins = [this.mentionPlugin];
+
     return (
       <div className={editorStyles.editor} onClick={this.focus}>
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}
           plugins={plugins}
-          ref="editor"
+          ref={(element) => { this.editor = element; }}
         />
         <MentionSuggestions
           onSearchChange={this.onSearchChange}

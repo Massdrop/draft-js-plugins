@@ -1,17 +1,20 @@
-import Mention from './Mention';
-import MentionSuggestions from './MentionSuggestions';
-import MentionSuggestionsPortal from './MentionSuggestionsPortal';
-import mentionStrategy from './mentionStrategy';
-import mentionSuggestionsStrategy from './mentionSuggestionsStrategy';
 import decorateComponentWithProps from 'decorate-component-with-props';
 import { Map } from 'immutable';
+import Mention from './Mention';
+import MentionSuggestions from './MentionSuggestions'; // eslint-disable-line import/no-named-as-default
+import MentionSuggestionsPortal from './MentionSuggestionsPortal';
+import defaultRegExp from './defaultRegExp';
+import mentionStrategy from './mentionStrategy';
+import mentionSuggestionsStrategy from './mentionSuggestionsStrategy';
 import mentionStyles from './mentionStyles.css';
 import mentionSuggestionsStyles from './mentionSuggestionsStyles.css';
 import mentionSuggestionsEntryStyles from './mentionSuggestionsEntryStyles.css';
 import suggestionsFilter from './utils/defaultSuggestionsFilter';
 import defaultPositionSuggestions from './utils/positionSuggestions';
 
-const createMentionPlugin = (config = {}) => {
+export { default as MentionSuggestions } from './MentionSuggestions';
+
+export default (config = {}) => {
   const defaultTheme = {
     mention: mentionStyles.mention,
 
@@ -42,8 +45,9 @@ const createMentionPlugin = (config = {}) => {
   };
 
   let searches = Map();
-  let escapedSearch = undefined;
+  let escapedSearch;
   let clientRectFunctions = Map();
+  let isOpened;
 
   const store = {
     getEditorState: undefined,
@@ -71,6 +75,9 @@ const createMentionPlugin = (config = {}) => {
       searches = searches.delete(offsetKey);
       clientRectFunctions = clientRectFunctions.delete(offsetKey);
     },
+
+    getIsOpened: () => isOpened,
+    setIsOpened: (nextIsOpened) => { isOpened = nextIsOpened; },
   };
 
   // Styles are overwritten instead of merged as merging causes a lot of confusion.
@@ -83,24 +90,31 @@ const createMentionPlugin = (config = {}) => {
     mentionPrefix = '',
     theme = defaultTheme,
     positionSuggestions = defaultPositionSuggestions,
+    mentionComponent,
+    mentionSuggestionsComponent = MentionSuggestions,
+    entityMutability = 'SEGMENTED',
+    mentionTrigger = '@',
+    mentionRegExp = defaultRegExp,
   } = config;
   const mentionSearchProps = {
     ariaProps,
     callbacks,
     theme,
     store,
-    entityMutability: config.entityMutability ? config.entityMutability : 'SEGMENTED',
+    entityMutability,
     positionSuggestions,
+    mentionTrigger,
+    mentionPrefix,
   };
   return {
-    MentionSuggestions: decorateComponentWithProps(MentionSuggestions, mentionSearchProps),
+    MentionSuggestions: decorateComponentWithProps(mentionSuggestionsComponent, mentionSearchProps),
     decorators: [
       {
-        strategy: mentionStrategy,
-        component: decorateComponentWithProps(Mention, { theme, mentionPrefix }),
+        strategy: mentionStrategy(mentionTrigger),
+        component: decorateComponentWithProps(Mention, { theme, mentionComponent }),
       },
       {
-        strategy: mentionSuggestionsStrategy,
+        strategy: mentionSuggestionsStrategy(mentionTrigger, mentionRegExp),
         component: decorateComponentWithProps(MentionSuggestionsPortal, { store }),
       },
     ],
@@ -131,7 +145,5 @@ const createMentionPlugin = (config = {}) => {
     },
   };
 };
-
-export default createMentionPlugin;
 
 export const defaultSuggestionsFilter = suggestionsFilter;

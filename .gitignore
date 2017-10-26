@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+*.iml
 
 # Dependency directory
 # Commenting this out is preferred by some people, see
@@ -17,4 +18,4 @@ bundle.js
 npm-debug.log
 npm-debug.log*
 
-docs/public
+docs/build

@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+### Added
+
+- Added rel attribute
+- The plugin now accepts a `component` config and if provided this component will be rendered instead of the default Anchor tag. Thanks to @antoinerey.
+
 ## 1.0.1 - 2016-04-29
 
 ### Fix

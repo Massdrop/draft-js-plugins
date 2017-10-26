@@ -23,7 +23,9 @@ this.setState({ editorState: EditorState.createEmpty() })
 
 ## Why are mentions broken after using `convertFromRaw` and throwing an error?
 
-We design the API to accept an Immutable Map for a Mention. After saving your datastructure to the erver and using `convertFromRaw` the mentions in there are plain objects. I (Nik) believe this is a law in our design and the mention data should be a plain object. Hint: We might fix this with v2.0.0 f the mentions plugin.
+__Please Note: this has been fixed in the beta version, from now on you can use a plain array for your mention suggestions__
+
+We design the API to accept an Immutable Map for a Mention. After saving your data structure to the server and using `convertFromRaw`, the mentions in there are plain objects. I (Nik) believe this is a flaw in our design and the mention data should be a plain object. Hint: we might fix this with v2.0.0 of the mentions plugin.
 
 What you can do now is fixing the datastructure before converting it:
 
@@ -75,7 +77,7 @@ const customDecorators = [
   },
 ];
 
-// Editor accepts a prop called decorators. 
+// Editor accepts a prop called decorators.
 const MyEditor = ({ editorState, onChange }) => (
   <Editor
     editorState={editorState}
@@ -119,3 +121,31 @@ const MyEditor = ({ editorState, editorState2, onChange, onChange2 }) => (
 
 export default MyEditor;
 ```
+
+## How can I avoid that a URL hash is converted to a Hash when using the linkify plugin?
+
+The order of the plugins matter. It will ignore the hash if the linkifyPlugin comes first in the plugins array.
+
+```js
+const plugin = [linkifyPlugin, hashtagPlugin]
+```
+
+## The editor throws errors in Internet Explorer 11?
+
+If you see error messages like `Symbol is undefined` or similar, it might probably be caused by lacking polyfills.
+
+To solve this, you can use `babel-polyfill` ([Babel Polyfill Documentation](https://babeljs.io/docs/usage/polyfill/)) to cover everything that babel cannot transpile/polyfill on build-time.
+Keep in mind that `babel-polyfill` is pretty huge and will increase your bundled filesize quite a bit. You can also just import the required polyfills manually using `core-js` directly:
+
+```javascript
+import 'core-js/es6/map';
+import 'core-js/es6/weak-map';
+import 'core-js/fn/object/assign';
+import 'core-js/fn/symbol';
+import 'core-js/fn/array/from';
+import 'core-js/fn/array/fill';
+import 'core-js/fn/string/starts-with';
+import 'core-js/fn/string/ends-with';
+```
+
+Note: Those imports *might* not cover all possibly needed polyfills; this means, you maybe need to adapt them.

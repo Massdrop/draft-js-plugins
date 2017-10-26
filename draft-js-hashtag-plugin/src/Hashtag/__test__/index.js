@@ -1,7 +1,8 @@
+/* eslint-disable react/no-children-prop */
 import React from 'react';
 import { shallow } from 'enzyme';
-import Hashtag from '../index';
 import { expect } from 'chai';
+import Hashtag from '../index';
 
 describe('Hashtag', () => {
   it('applies the className based on the theme property `hashtag`', () => {

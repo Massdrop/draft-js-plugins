@@ -1,5 +1,3 @@
-/* @flow */
-
 import linkifyIt from 'linkify-it';
 import tlds from 'tlds';
 
@@ -10,7 +8,7 @@ linkify.tlds(tlds);
 const linkStrategy = (contentBlock: Object, callback: Function) => {
   const links = linkify.match(contentBlock.get('text'));
   if (typeof links !== 'undefined' && links !== null) {
-    for (let i = 0; i < links.length; i++) {
+    for (let i = 0; i < links.length; i += 1) {
       callback(links[i].index, links[i].lastIndex);
     }
   }

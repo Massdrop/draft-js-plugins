@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { EditorState } from 'draft-js';
-import Editor from 'draft-js-plugins-editor'; // eslint-disable-line import/no-unresolved
-import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin'; // eslint-disable-line import/no-unresolved
+import Editor from 'draft-js-plugins-editor';
+import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import editorStyles from './editorStyles.css';
 import mentionsStyles from './mentionsStyles.css';
 import mentions from './mentions';
@@ -10,7 +10,7 @@ const positionSuggestions = ({ state, props }) => {
   let transform;
   let transition;
 
-  if (state.isActive & props.suggestions.size > 0) {
+  if (state.isActive && props.suggestions.size > 0) {
     transform = 'scaleY(1)';
     transition = 'all 0.25s cubic-bezier(.3,1.2,.2,1)';
   } else if (state.isActive) {
@@ -24,18 +24,14 @@ const positionSuggestions = ({ state, props }) => {
   };
 };
 
-const mentionPlugin = createMentionPlugin({
-  mentions,
-  entityMutability: 'IMMUTABLE',
-  theme: mentionsStyles,
-  positionSuggestions,
-  mentionPrefix: '@',
-});
-const { MentionSuggestions } = mentionPlugin;
-const plugins = [mentionPlugin];
-
 const Entry = (props) => {
-  const { mention, theme, ...parentProps } = props;
+  const {
+    mention,
+    theme,
+    searchValue, // eslint-disable-line no-unused-vars
+    isFocused, // eslint-disable-line no-unused-vars
+    ...parentProps
+  } = props;
 
   return (
     <div {...parentProps}>
@@ -64,6 +60,18 @@ const Entry = (props) => {
 
 export default class CustomMentionEditor extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.mentionPlugin = createMentionPlugin({
+      mentions,
+      entityMutability: 'IMMUTABLE',
+      theme: mentionsStyles,
+      positionSuggestions,
+      mentionPrefix: '@',
+    });
+  }
+
   state = {
     editorState: EditorState.createEmpty(),
     suggestions: mentions,
@@ -82,17 +90,20 @@ export default class CustomMentionEditor extends Component {
   };
 
   focus = () => {
-    this.refs.editor.focus();
+    this.editor.focus();
   };
 
   render() {
+    const { MentionSuggestions } = this.mentionPlugin;
+    const plugins = [this.mentionPlugin];
+
     return (
       <div className={editorStyles.editor} onClick={this.focus}>
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}
           plugins={plugins}
-          ref="editor"
+          ref={(element) => { this.editor = element; }}
         />
         <MentionSuggestions
           onSearchChange={this.onSearchChange}

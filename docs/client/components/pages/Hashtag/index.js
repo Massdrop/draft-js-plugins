@@ -1,4 +1,22 @@
 import React, { Component } from 'react';
+
+// eslint-disable-next-line import/no-unresolved
+import simpleExampleCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleHashtagEditor';
+// eslint-disable-next-line import/no-unresolved
+import simpleExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./SimpleHashtagEditor/editorStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import customExampleCode from '!!../../../loaders/prism-loader?language=javascript!./CustomHashtagEditor';
+// eslint-disable-next-line import/no-unresolved
+import customExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomHashtagEditor/editorStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import customExampleHashtagStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomHashtagEditor/hashtagStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import gettingStarted from '!!../../../loaders/prism-loader?language=javascript!./gettingStarted';
+// eslint-disable-next-line import/no-unresolved
+import webpackConfig from '!!../../../loaders/prism-loader?language=javascript!./webpackConfig';
+ // eslint-disable-next-line import/no-unresolved
+import webpackImport from '!!../../../loaders/prism-loader?language=javascript!./webpackImport';
+
 import Container from '../../shared/Container';
 import AlternateContainer from '../../shared/AlternateContainer';
 import Heading from '../../shared/Heading';
@@ -7,20 +25,13 @@ import Code from '../../shared/Code';
 import InlineCode from '../../shared/InlineCode';
 import SimpleHashtagEditor from './SimpleHashtagEditor';
 import CustomHashtagEditor from './CustomHashtagEditor';
-import simpleExampleCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleHashtagEditor'; // eslint-disable-line import/no-unresolved
-import simpleExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./SimpleHashtagEditor/editorStyles.css'; // eslint-disable-line import/no-unresolved
-import customExampleCode from '!!../../../loaders/prism-loader?language=javascript!./CustomHashtagEditor'; // eslint-disable-line import/no-unresolved
-import customExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomHashtagEditor/editorStyles.css'; // eslint-disable-line import/no-unresolved
-import customExampleHashtagStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomHashtagEditor/hashtagStyles.css'; // eslint-disable-line import/no-unresolved
-import gettingStarted from '!!../../../loaders/prism-loader?language=javascript!./gettingStarted'; // eslint-disable-line import/no-unresolved
-import webpackConfig from '!!../../../loaders/prism-loader?language=javascript!./webpackConfig'; // eslint-disable-line import/no-unresolved
-import webpackImport from '!!../../../loaders/prism-loader?language=javascript!./webpackImport'; // eslint-disable-line import/no-unresolved
 import SocialBar from '../../shared/SocialBar';
 import NavBar from '../../shared/NavBar';
 import Separator from '../../shared/Separator';
 import ExternalLink from '../../shared/Link';
 
 export default class App extends Component {
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return (
       <div>
@@ -28,6 +39,25 @@ export default class App extends Component {
         <Separator />
         <Container>
           <Heading level={2}>Hashtag</Heading>
+          <p>
+            Highlighting words starting with a number sign (#).
+          </p>
+          <Heading level={3}>Usage in combination with Linkify Plugin</Heading>
+          <p>
+            When used in combination with the linkify plugin make sure the hashtag plugin is listed afterwards in the plugins list to avoid URL hashes being styled as hashtags e.g. <InlineCode code={'[linkifyPlugin, hashtagPlugin]'} />
+          </p>
+          <Heading level={3}>Supported Environment</Heading>
+          <ul className={styles.list}>
+            <li className={styles.listEntry}>
+              Desktop: Yes
+            </li>
+            <li className={styles.listEntry}>
+              Mobile: Yes
+            </li>
+            <li className={styles.listEntry}>
+              Screen-reader: Yes
+            </li>
+          </ul>
         </Container>
         <AlternateContainer>
           <Heading level={2}>Getting Started</Heading>

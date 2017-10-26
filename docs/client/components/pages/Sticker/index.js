@@ -1,4 +1,24 @@
 import React, { Component } from 'react';
+
+// eslint-disable-next-line import/no-unresolved
+import simpleExampleCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleStickerEditor';
+// eslint-disable-next-line import/no-unresolved
+import simpleExampleStickersCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleStickerEditor/stickers.js';
+// eslint-disable-next-line import/no-unresolved
+import simpleExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./SimpleStickerEditor/editorStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import customExampleCode from '!!../../../loaders/prism-loader?language=javascript!./CustomStickerEditor';
+// eslint-disable-next-line import/no-unresolved
+import customExampleStickersCode from '!!../../../loaders/prism-loader?language=javascript!./CustomStickerEditor/stickers.js';
+// eslint-disable-next-line import/no-unresolved
+import customExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomStickerEditor/editorStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import gettingStarted from '!!../../../loaders/prism-loader?language=javascript!./gettingStarted';
+// eslint-disable-next-line import/no-unresolved
+import webpackConfig from '!!../../../loaders/prism-loader?language=javascript!./webpackConfig';
+// eslint-disable-next-line import/no-unresolved
+import webpackImport from '!!../../../loaders/prism-loader?language=javascript!./webpackImport';
+
 import Container from '../../shared/Container';
 import AlternateContainer from '../../shared/AlternateContainer';
 import Heading from '../../shared/Heading';
@@ -6,20 +26,11 @@ import styles from './styles.css';
 import Code from '../../shared/Code';
 import SimpleStickerEditor from './SimpleStickerEditor';
 import CustomStickerEditor from './CustomStickerEditor';
-import simpleExampleCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleStickerEditor'; // eslint-disable-line import/no-unresolved
-import simpleExampleStickersCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleStickerEditor/stickers.js'; // eslint-disable-line import/no-unresolved
-import simpleExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./SimpleStickerEditor/editorStyles.css'; // eslint-disable-line import/no-unresolved
-import customExampleCode from '!!../../../loaders/prism-loader?language=javascript!./CustomStickerEditor'; // eslint-disable-line import/no-unresolved
-import customExampleStickersCode from '!!../../../loaders/prism-loader?language=javascript!./CustomStickerEditor/stickers.js'; // eslint-disable-line import/no-unresolved
-import customExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomStickerEditor/editorStyles.css'; // eslint-disable-line import/no-unresolved
-import gettingStarted from '!!../../../loaders/prism-loader?language=javascript!./gettingStarted'; // eslint-disable-line import/no-unresolved
+import ExternalLink from '../../shared/Link';
+import InlineCode from '../../shared/InlineCode';
 import SocialBar from '../../shared/SocialBar';
 import NavBar from '../../shared/NavBar';
 import Separator from '../../shared/Separator';
-import webpackConfig from '!!../../../loaders/prism-loader?language=javascript!./webpackConfig'; // eslint-disable-line import/no-unresolved
-import webpackImport from '!!../../../loaders/prism-loader?language=javascript!./webpackImport'; // eslint-disable-line import/no-unresolved
-import ExternalLink from '../../shared/Link';
-import InlineCode from '../../shared/InlineCode';
 
 export default class App extends Component {
   render() {
@@ -29,6 +40,18 @@ export default class App extends Component {
         <Separator />
         <Container>
           <Heading level={2}>Sticker</Heading>
+          <Heading level={3}>Supported Environment</Heading>
+          <ul className={styles.list}>
+            <li className={styles.listEntry}>
+              Desktop: Yes
+            </li>
+            <li className={styles.listEntry}>
+              Mobile: Yes
+            </li>
+            <li className={styles.listEntry}>
+              Screen-reader: Yes
+            </li>
+          </ul>
         </Container>
         <AlternateContainer>
           <Heading level={2}>Getting Started</Heading>
@@ -72,7 +95,7 @@ export default class App extends Component {
             <span>Object of CSS classes with the following keys.</span>
             <div className={styles.subParams}>
               <div className={styles.subParam}><span className={styles.subParamName}>sticker:</span> CSS class for sticker.</div>
-              <div className={styles.subParam}><span className={styles.subParamName}>stickerImage:</span> CSS class for </div>
+              <div className={styles.subParam}><span className={styles.subParamName}>stickerImage:</span> CSS class for sticker image tag.</div>
               <div className={styles.subParam}><span className={styles.subParamName}>stickerRemoveButton:</span> CSS class for sticker remove button.</div>
               <div className={styles.subParam}><span className={styles.subParamName}>select:</span> CSS class for sticker select.</div>
               <div className={styles.subParam}><span className={styles.subParamName}>selectPopover:</span> CSS class for sticker select popup.</div>

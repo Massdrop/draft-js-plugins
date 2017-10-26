@@ -20,11 +20,20 @@ Now get the `UndoButton` and the `RedoButton` components from the instance:
 const { UndoButton, RedoButton } = undoPlugin;
 ```
 
-Which take two props, `onChange` (a function that takes a new editor state as an argument and updates your editor's state) and `editorState` (the current editor state). Render them with those props and your editor now has undo/redo functionality!
+Add `undoPlugin` to `plugins` prop of `draft-js-plugins-editor`, render the buttons and your editor now has undo/redo functionality!
 
 ```HTML
-<UndoButton onChange={ this.onChange } editorState={ this.state.editorState } />
-<RedoButton onChange={ this.onChange } editorState={ this.state.editorState } />
+const MyEditor = ({ editorState, onChange }) => (
+  <div>
+    <Editor
+      editorState={editorState}
+      onChange={onChange}
+      plugins={[undoPlugin]}
+    />
+    <UndoButton />
+    <RedoButton />
+  </div>
+);
 ```
 
 ## Importing the default styles
@@ -43,7 +52,7 @@ Follow the steps below to import the css file by using Webpack's `style-loader` 
       loaders: [{
         test: /\.css$/,
         loaders: [
-          'style', 'css'
+          'style-loader', 'css'
         ]
       }]
     }
@@ -55,7 +64,3 @@ Follow the steps below to import the css file by using Webpack's `style-loader` 
     import 'draft-js-undo-plugin/lib/plugin.css';
     ```
 4. Restart Webpack.
-
-### Browserify Usage
-
-TODO: PR welcome

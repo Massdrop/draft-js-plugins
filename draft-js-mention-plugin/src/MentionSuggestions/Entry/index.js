@@ -1,12 +1,14 @@
 import React, {
   Component,
-  PropTypes
 } from 'react';
-import Avatar from './Avatar';
+import PropTypes from 'prop-types';
 
 export default class Entry extends Component {
-  static contextTypes = {
-    getUserAgent: PropTypes.func
+
+  static propTypes = {
+    entryComponent: PropTypes.any.isRequired,
+    searchValue: PropTypes.string,
+    onMentionSelect: PropTypes.func
   };
 
   constructor(props) {
@@ -20,8 +22,8 @@ export default class Entry extends Component {
 
   onMouseUp = () => {
     if (this.mouseDown) {
-      this.mouseDown = false;
       this.props.onMentionSelect(this.props.mention);
+      this.mouseDown = false;
     }
   };
 
@@ -36,38 +38,22 @@ export default class Entry extends Component {
     this.props.onMentionFocus(this.props.index);
   };
 
-  onTouchStart = (event) => {
-    event.preventDefault();
-
-    this.props.onMentionSelect(this.props.mention);
-  };
-
   render() {
-    const { theme = {} } = this.props;
-    const className = this.props.isFocused ? theme.mentionSuggestionsEntryFocused : theme.mentionSuggestionsEntry;
-    let selectMentionHandlers;
-
-    if (this.context.getUserAgent().isMobile) {
-      selectMentionHandlers = {
-        onTouchStart: this.onTouchStart
-      };
-    } else {
-      selectMentionHandlers = {
-        onMouseDown: this.onMouseDown,
-        onMouseUp: this.onMouseUp,
-        onMouseEnter: this.onMouseEnter
-      };
-    }
-
+    const { theme = {}, mention, searchValue, isFocused } = this.props;
+    const className = isFocused ? theme.mentionSuggestionsEntryFocused : theme.mentionSuggestionsEntry;
+    const EntryComponent = this.props.entryComponent;
     return (
-      <div
+      <EntryComponent
         className={className}
-        {...selectMentionHandlers}
+        onMouseDown={this.onMouseDown}
+        onMouseUp={this.onMouseUp}
+        onMouseEnter={this.onMouseEnter}
         role="option"
-      >
-        <Avatar mention={this.props.mention} theme={theme} />
-        <span className={theme.mentionSuggestionsEntryText}>{this.props.mention.get('name')}</span>
-      </div>
+        theme={theme}
+        mention={mention}
+        isFocused={isFocused}
+        searchValue={searchValue}
+      />
     );
   }
 }

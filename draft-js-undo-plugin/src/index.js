@@ -1,14 +1,14 @@
+import decorateComponentWithProps from 'decorate-component-with-props';
 import UndoButton from './UndoButton';
 import RedoButton from './RedoButton';
 import styles from './styles.css';
-import decorateComponentWithProps from 'decorate-component-with-props';
 
 const defaultTheme = {
   redo: styles.button,
   undo: styles.button,
 };
 
-const historyPlugin = (config = {}) => {
+export default (config = {}) => {
   const undoContent = config.undoContent ? config.undoContent : '↺';
   const redoContent = config.redoContent ? config.redoContent : '↻';
   const store = {
@@ -32,5 +32,3 @@ const historyPlugin = (config = {}) => {
     },
   };
 };
-
-export default historyPlugin;

@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { EditorState } from 'draft-js';
-import Editor from 'draft-js-plugins-editor'; // eslint-disable-line import/no-unresolved
-import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin'; // eslint-disable-line import/no-unresolved
+import Editor from 'draft-js-plugins-editor';
+import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import editorStyles from './editorStyles.css';
 import mentions from './mentions';
 
-const mentionPlugin = createMentionPlugin();
-const { MentionSuggestions } = mentionPlugin;
-const plugins = [mentionPlugin];
-
 export default class SimpleMentionEditor extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.mentionPlugin = createMentionPlugin();
+  }
 
   state = {
     editorState: EditorState.createEmpty(),
@@ -28,22 +30,30 @@ export default class SimpleMentionEditor extends Component {
     });
   };
 
+  onAddMention = () => {
+    // get the mention object selected
+  }
+
   focus = () => {
-    this.refs.editor.focus();
+    this.editor.focus();
   };
 
   render() {
+    const { MentionSuggestions } = this.mentionPlugin;
+    const plugins = [this.mentionPlugin];
+
     return (
       <div className={editorStyles.editor} onClick={this.focus}>
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}
           plugins={plugins}
-          ref="editor"
+          ref={(element) => { this.editor = element; }}
         />
         <MentionSuggestions
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
+          onAddMention={this.onAddMention}
         />
       </div>
     );

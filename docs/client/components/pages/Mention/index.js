@@ -1,4 +1,32 @@
 import React, { Component } from 'react';
+
+// eslint-disable-next-line import/no-unresolved
+import simpleExampleCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleMentionEditor';
+// eslint-disable-next-line import/no-unresolved
+import simpleExampleMentionsCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleMentionEditor/mentions.js';
+// eslint-disable-next-line import/no-unresolved
+import simpleExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./SimpleMentionEditor/editorStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import customExampleCode from '!!../../../loaders/prism-loader?language=javascript!./CustomMentionEditor';
+// eslint-disable-next-line import/no-unresolved
+import customExampleMentionsCode from '!!../../../loaders/prism-loader?language=javascript!./CustomMentionEditor/mentions.js';
+// eslint-disable-next-line import/no-unresolved
+import customExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomMentionEditor/editorStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import customExampleMentionsStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomMentionEditor/mentionsStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import remoteExampleCode from '!!../../../loaders/prism-loader?language=javascript!./RemoteMentionEditor';
+// eslint-disable-next-line import/no-unresolved
+import remoteExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./RemoteMentionEditor/editorStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import customComponentExampleCode from '!!../../../loaders/prism-loader?language=javascript!./CustomComponentMentionEditor';
+// eslint-disable-next-line import/no-unresolved
+import customComponentExampleStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomComponentMentionEditor/editorStyles.css';
+// eslint-disable-next-line import/no-unresolved
+import webpackConfig from '!!../../../loaders/prism-loader?language=javascript!./webpackConfig';
+// eslint-disable-next-line import/no-unresolved
+import webpackImport from '!!../../../loaders/prism-loader?language=javascript!./webpackImport';
+
 import Container from '../../shared/Container';
 import AlternateContainer from '../../shared/AlternateContainer';
 import Heading from '../../shared/Heading';
@@ -7,20 +35,10 @@ import Code from '../../shared/Code';
 import SimpleMentionEditor from './SimpleMentionEditor';
 import CustomMentionEditor from './CustomMentionEditor';
 import RemoteMentionEditor from './RemoteMentionEditor';
-import simpleExampleCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleMentionEditor'; // eslint-disable-line import/no-unresolved
-import simpleExampleMentionsCode from '!!../../../loaders/prism-loader?language=javascript!./SimpleMentionEditor/mentions.js'; // eslint-disable-line import/no-unresolved
-import simpleExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./SimpleMentionEditor/editorStyles.css'; // eslint-disable-line import/no-unresolved
-import customExampleCode from '!!../../../loaders/prism-loader?language=javascript!./CustomMentionEditor'; // eslint-disable-line import/no-unresolved
-import customExampleMentionsCode from '!!../../../loaders/prism-loader?language=javascript!./CustomMentionEditor/mentions.js'; // eslint-disable-line import/no-unresolved
-import customExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomMentionEditor/editorStyles.css'; // eslint-disable-line import/no-unresolved
-import customExampleMentionsStylesCode from '!!../../../loaders/prism-loader?language=css!./CustomMentionEditor/mentionsStyles.css'; // eslint-disable-line import/no-unresolved
-import remoteExampleCode from '!!../../../loaders/prism-loader?language=javascript!./RemoteMentionEditor'; // eslint-disable-line import/no-unresolved
-import remoteExampleEditorStylesCode from '!!../../../loaders/prism-loader?language=css!./RemoteMentionEditor/editorStyles.css'; // eslint-disable-line import/no-unresolved
+import CustomComponentMentionEditor from './CustomComponentMentionEditor';
 import SocialBar from '../../shared/SocialBar';
 import NavBar from '../../shared/NavBar';
 import Separator from '../../shared/Separator';
-import webpackConfig from '!!../../../loaders/prism-loader?language=javascript!./webpackConfig'; // eslint-disable-line import/no-unresolved
-import webpackImport from '!!../../../loaders/prism-loader?language=javascript!./webpackImport'; // eslint-disable-line import/no-unresolved
 import ExternalLink from '../../shared/Link';
 import InlineCode from '../../shared/InlineCode';
 
@@ -43,6 +61,18 @@ export default class App extends Component {
             The suggestions will appear again once the user selects the word that
             that triggered the selection.
           </p>
+          <Heading level={3}>Supported Environment</Heading>
+          <ul className={styles.list}>
+            <li className={styles.listEntry}>
+              Desktop: Yes
+            </li>
+            <li className={styles.listEntry}>
+              Mobile: Yes
+            </li>
+            <li className={styles.listEntry}>
+              Screen-reader: Yes
+            </li>
+          </ul>
         </Container>
         <AlternateContainer>
           <Heading level={2}>Getting Started</Heading>
@@ -117,7 +147,7 @@ export default class App extends Component {
           </div>
           <div className={styles.param}>
             <span className={styles.paramName}>entityMutability</span>
-            <span>Can be one of: "IMMUTABLE", "SEGMENTED" or "MUTABLE". Read in detail about it
+            <span>Can be one of: &quot;IMMUTABLE&quot;, &quot;SEGMENTED&quot; or &quot;MUTABLE&quot;. Read in detail about it
               <ExternalLink
                 href="https://facebook.github.io/draft-js/docs/advanced-topics-entities.html#mutability"
               >
@@ -131,7 +161,15 @@ export default class App extends Component {
           </div>
           <div className={styles.param}>
             <span className={styles.paramName}>mentionTrigger</span>
-            <span>By default it is set to `@`. By default typing `@` will trigger the search for mentions. You can provide a custom character or string to change when the search is triggered.</span>
+            <span>Allows you to provide a custom character to change when the search is triggered. By default it is set to `@`. By default typing `@` will trigger the search for mentions. Note: the implementation does not support a multi-character mentionTrigger.</span>
+          </div>
+          <div className={styles.param}>
+            <span className={styles.paramName}>mentionRegExp</span>
+            <span>Allows you to overwrite the regular expression for initiating the dropdown. By default this supports any alphanumeric character as well as Chinese, Japanese & Korean characters. We are happy to accept pull requests to extend the default mentionRegExp as well.</span>
+          </div>
+          <div className={styles.param}>
+            <span className={styles.paramName}>mentionComponent</span>
+            <span>If provided the passed component is used to render a Mention. It receives the following props: entityKey, mention, className & decoratedText</span>
           </div>
           <Heading level={3}>MentionSuggestions</Heading>
           <div>
@@ -155,12 +193,27 @@ export default class App extends Component {
             </div>
             <div className={styles.param}>
               <span className={styles.paramName}>entryComponent</span>
-              <span>Component to be used as the template for each of the suggestions' entry.</span>
+              <span>Component to be used as the template for each of the suggestions entry.</span>
+            </div>
+            <div className={styles.param}>
+              <span className={styles.paramName}>onAddMention</span>
+              <span>A callback which is triggered whenever the mention is about to be added. The first argument of this callback will contain the mention entry.</span>
+            </div>
+            <div className={styles.param}>
+              <span className={styles.paramName}>popoverComponent</span>
+              <span>Component to be used as the template for the popover (the parent of entryComponent).  Defaults to a div.</span>
+            </div>
+            <div className={styles.param}>
+              <span className={styles.paramName}>mentionSuggestionsComponent</span>
+              <span>Component to be used to render the suggestions dropdown. It must implement the same interface like <InlineCode code="MentionSuggestions" />.  Defaults to <InlineCode code="MentionSuggestions" />.</span>
+            </div>
+            <div className={styles.param}>
+              <span>Additional properties are passed to the <InlineCode code="popoverComponent" /></span>
             </div>
           </div>
           <Heading level={3}>Additional Exports</Heading>
           <div>
-            In addition to the plugin the module exports `defaultSuggestionsFilter`. As first argument it takes the search term as a String. The second argument is the Immutable list of mentions. The function returns the filter list based on substring matches.
+            In addition to the plugin the module exports `defaultSuggestionsFilter`. As first argument it takes the search term as a String. The second argument is an array of mentions. The function returns the filter list based on substring matches.
             <Code code="import { defaultSuggestionsFilter } from 'draft-js-mention-plugin';" />
           </div>
         </Container>
@@ -172,7 +225,7 @@ export default class App extends Component {
           <Code code={simpleExampleEditorStylesCode} name="editorStyles.css" />
         </Container>
         <Container>
-          <Heading level={2}>Themed Mention Example</Heading>
+          <Heading level={2}>Custom Themed Mention Example</Heading>
           <CustomMentionEditor />
           <Code code={customExampleCode} name="CustomMentionEditor.js" />
           <Code code={customExampleMentionsStylesCode} name="mentionsStyles.js" />
@@ -184,6 +237,12 @@ export default class App extends Component {
           <RemoteMentionEditor />
           <Code code={remoteExampleCode} name="RemoteMentionEditor.js" />
           <Code code={remoteExampleEditorStylesCode} name="editorStyles.css" />
+        </Container>
+        <Container>
+          <Heading level={2}>Custom Mention Component Example</Heading>
+          <CustomComponentMentionEditor />
+          <Code code={customComponentExampleCode} name="CustomComponentMentionEditor.js" />
+          <Code code={customComponentExampleStylesCode} name="editorStyles.css" />
         </Container>
         <SocialBar />
       </div>

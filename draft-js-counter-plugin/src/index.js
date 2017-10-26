@@ -1,16 +1,16 @@
+import decorateComponentWithProps from 'decorate-component-with-props';
 import CharCounter from './CharCounter';
 import WordCounter from './WordCounter';
 import LineCounter from './LineCounter';
 import CustomCounter from './CustomCounter';
 import styles from './styles.css';
-import decorateComponentWithProps from 'decorate-component-with-props';
 
 const defaultTheme = {
   counter: styles.counter,
   counterOverLimit: styles.counterOverLimit,
 };
 
-const counterPlugin = (config = {}) => {
+export default (config = {}) => {
   const store = {
     getEditorState: undefined,
     setEditorState: undefined,
@@ -33,5 +33,3 @@ const counterPlugin = (config = {}) => {
     },
   };
 };
-
-export default counterPlugin;

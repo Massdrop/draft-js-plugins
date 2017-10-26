@@ -1,10 +1,11 @@
+import { Map } from 'immutable';
+import decorateComponentWithProps from 'decorate-component-with-props';
 import addSticker from './modifiers/addSticker';
 import removeSticker from './modifiers/removeSticker';
 import cleanupEmptyStickers from './modifiers/cleanupEmptyStickers';
 import blockRendererFn from './blockRendererFn';
 import Sticker from './Sticker';
 import StickerSelect from './StickerSelect';
-import decorateComponentWithProps from 'decorate-component-with-props';
 import stickerStyles from './stickerStyles.css';
 import selectStyles from './selectStyles.css';
 import selectStickerStyles from './selectStickerStyles.css';
@@ -26,7 +27,7 @@ const defaultTheme = {
   selectStickerImage: selectStickerStyles.selectStickerImage,
 };
 
-const stickerPlugin = (config = {}) => {
+export default (config = {}) => {
   // Styles are overwritten instead of merged as merging causes a lot of confusion.
   //
   // Why? Because when merging a developer needs to know all of the underlying
@@ -58,8 +59,7 @@ const stickerPlugin = (config = {}) => {
     onChange: cleanupEmptyStickers,
     add: addSticker,
     remove: removeSticker,
+    blockRenderMap: Map({ sticker: { element: 'div' } }),
     StickerSelect: decorateComponentWithProps(StickerSelect, stickerSelectProps),
   };
 };
-
-export default stickerPlugin;

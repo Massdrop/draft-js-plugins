@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Entity } from 'draft-js';
 
 export default class Sticker extends Component {
 
@@ -12,8 +11,9 @@ export default class Sticker extends Component {
   };
 
   render() {
-    const { block, stickers, theme = {} } = this.props;
+    const { block, stickers, theme = {}, contentState } = this.props;
     const removeButton = (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <span
         className={theme.stickerRemoveButton}
         onClick={this.remove}
@@ -23,7 +23,7 @@ export default class Sticker extends Component {
       </span>
     );
 
-    const data = Entity.get(block.getEntityAt(0)).getData();
+    const data = contentState.getEntity(block.getEntityAt(0)).getData();
     return (
       <figure
         contentEditable={false}

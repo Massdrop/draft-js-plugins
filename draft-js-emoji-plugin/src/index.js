@@ -1,26 +1,31 @@
-import Emoji from './Emoji';
-import EmojiSuggestions from './EmojiSuggestions';
-import EmojiSuggestionsPortal from './EmojiSuggestionsPortal';
+import { Map, List } from 'immutable';
+
+import keys from 'lodash.keys';
+import decorateComponentWithProps from 'decorate-component-with-props';
+import { EditorState } from 'draft-js';
+import Emoji from './components/Emoji';
+import EmojiSuggestions from './components/EmojiSuggestions';
+import EmojiSuggestionsPortal from './components/EmojiSuggestionsPortal';
+import EmojiSelect from './components/EmojiSelect';
 import emojiStrategy from './emojiStrategy';
 import emojiSuggestionsStrategy from './emojiSuggestionsStrategy';
-import decorateComponentWithProps from 'decorate-component-with-props';
-import { Map } from 'immutable';
 import emojiStyles from './emojiStyles.css';
 import emojiSuggestionsStyles from './emojiSuggestionsStyles.css';
 import emojiSuggestionsEntryStyles from './emojiSuggestionsEntryStyles.css';
+import emojiSelectStyles from './emojiSelectStyles.css';
 import attachImmutableEntitiesToEmojis from './modifiers/attachImmutableEntitiesToEmojis';
 import defaultPositionSuggestions from './utils/positionSuggestions';
-import { EditorState } from 'draft-js';
+import emojiList from './utils/emojiList';
 
 const defaultImagePath = '//cdn.jsdelivr.net/emojione/assets/svg/';
-const cacheBustParam = '?v=2.1.2';
+const defaultImageType = 'svg';
+const defaultCacheBustParam = '?v=2.2.7';
 
 // TODO activate/deactivate different the conversion or search part
 
-const createEmojiPlugin = (config = {}) => {
+export default (config = {}) => {
   const defaultTheme = {
     emoji: emojiStyles.emoji,
-    emojiCharacter: emojiStyles.emojiCharacter,
 
     emojiSuggestions: emojiSuggestionsStyles.emojiSuggestions,
 
@@ -28,7 +33,37 @@ const createEmojiPlugin = (config = {}) => {
     emojiSuggestionsEntryFocused: emojiSuggestionsEntryStyles.emojiSuggestionsEntryFocused,
     emojiSuggestionsEntryText: emojiSuggestionsEntryStyles.emojiSuggestionsEntryText,
     emojiSuggestionsEntryIcon: emojiSuggestionsEntryStyles.emojiSuggestionsEntryIcon,
-    emojiSuggestionsEntryAvatar: emojiSuggestionsEntryStyles.emojiSuggestionsEntryAvatar,
+
+    emojiSelect: emojiSelectStyles.emojiSelect,
+
+    emojiSelectButton: emojiSelectStyles.emojiSelectButton,
+    emojiSelectButtonPressed: emojiSelectStyles.emojiSelectButtonPressed,
+
+    emojiSelectPopover: emojiSelectStyles.emojiSelectPopover,
+    emojiSelectPopoverClosed: emojiSelectStyles.emojiSelectPopoverClosed,
+    emojiSelectPopoverTitle: emojiSelectStyles.emojiSelectPopoverTitle,
+    emojiSelectPopoverGroups: emojiSelectStyles.emojiSelectPopoverGroups,
+
+    emojiSelectPopoverGroup: emojiSelectStyles.emojiSelectPopoverGroup,
+    emojiSelectPopoverGroupTitle: emojiSelectStyles.emojiSelectPopoverGroupTitle,
+    emojiSelectPopoverGroupList: emojiSelectStyles.emojiSelectPopoverGroupList,
+    emojiSelectPopoverGroupItem: emojiSelectStyles.emojiSelectPopoverGroupItem,
+
+    emojiSelectPopoverToneSelect: emojiSelectStyles.emojiSelectPopoverToneSelect,
+    emojiSelectPopoverToneSelectList: emojiSelectStyles.emojiSelectPopoverToneSelectList,
+    emojiSelectPopoverToneSelectItem: emojiSelectStyles.emojiSelectPopoverToneSelectItem,
+
+    emojiSelectPopoverEntry: emojiSelectStyles.emojiSelectPopoverEntry,
+    emojiSelectPopoverEntryFocused: emojiSelectStyles.emojiSelectPopoverEntryFocused,
+    emojiSelectPopoverEntryIcon: emojiSelectStyles.emojiSelectPopoverEntryIcon,
+
+    emojiSelectPopoverNav: emojiSelectStyles.emojiSelectPopoverNav,
+    emojiSelectPopoverNavItem: emojiSelectStyles.emojiSelectPopoverNavItem,
+    emojiSelectPopoverNavEntry: emojiSelectStyles.emojiSelectPopoverNavEntry,
+    emojiSelectPopoverNavEntryActive: emojiSelectStyles.emojiSelectPopoverNavEntryActive,
+
+    emojiSelectPopoverScrollbar: emojiSelectStyles.emojiSelectPopoverScrollbar,
+    emojiSelectPopoverScrollbarThumb: emojiSelectStyles.emojiSelectPopoverScrollbarThumb,
   };
 
   const callbacks = {
@@ -50,7 +85,7 @@ const createEmojiPlugin = (config = {}) => {
   };
 
   let searches = Map();
-  let escapedSearch = undefined;
+  let escapedSearch;
   let clientRectFunctions = Map();
 
   const store = {
@@ -89,24 +124,51 @@ const createEmojiPlugin = (config = {}) => {
   // breaking change. 1px of an increased padding can break a whole layout.
   const {
     theme = defaultTheme,
-    positionSuggestions = defaultPositionSuggestions,
     imagePath = defaultImagePath,
+    imageType = defaultImageType,
+    allowImageCache,
+    positionSuggestions = defaultPositionSuggestions,
+    priorityList,
+    selectGroups,
+    selectButtonContent,
+    toneSelectOpenDelay,
+    useNativeArt,
   } = config;
-  const emojiSearchProps = {
+
+  const cacheBustParam = allowImageCache ? '' : defaultCacheBustParam;
+
+  // if priorityList is configured in config then set priorityList
+  if (priorityList) emojiList.setPriorityList(priorityList);
+  const suggestionsProps = {
     ariaProps,
     cacheBustParam,
     callbacks,
     imagePath,
+    imageType,
     theme,
     store,
     positionSuggestions,
+    shortNames: List(keys(emojiList.list)),
+    useNativeArt,
+  };
+  const selectProps = {
+    cacheBustParam,
+    imagePath,
+    imageType,
+    theme,
+    store,
+    selectGroups,
+    selectButtonContent,
+    toneSelectOpenDelay,
+    useNativeArt,
   };
   return {
-    EmojiSuggestions: decorateComponentWithProps(EmojiSuggestions, emojiSearchProps),
+    EmojiSuggestions: decorateComponentWithProps(EmojiSuggestions, suggestionsProps),
+    EmojiSelect: decorateComponentWithProps(EmojiSelect, selectProps),
     decorators: [
       {
         strategy: emojiStrategy,
-        component: decorateComponentWithProps(Emoji, { theme, imagePath, cacheBustParam }),
+        component: decorateComponentWithProps(Emoji, { theme, imagePath, imageType, cacheBustParam, useNativeArt }),
       },
       {
         strategy: emojiSuggestionsStrategy,
@@ -153,5 +215,3 @@ const createEmojiPlugin = (config = {}) => {
     },
   };
 };
-
-export default createEmojiPlugin;

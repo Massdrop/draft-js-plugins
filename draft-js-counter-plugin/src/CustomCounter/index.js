@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import unionClassNames from 'union-class-names';
 
 class CustomCounter extends Component {
@@ -6,7 +7,7 @@ class CustomCounter extends Component {
   static propTypes = {
     theme: PropTypes.any,
     limit: PropTypes.number,
-    countFunction: PropTypes.function,
+    countFunction: PropTypes.func.isRequired,
   };
 
   getClassNames(count, limit) {

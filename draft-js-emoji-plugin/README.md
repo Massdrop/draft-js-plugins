@@ -11,7 +11,18 @@ import createEmojiPlugin from 'draft-js-emoji-plugin';
 
 const emojiPlugin = createEmojiPlugin();
 ```
+## Advanced Usage
 
+```js
+const emojiPlugin = createEmojiPlugin({
+  priorityList: {
+    ':see_no_evil:': ["1f648"],
+    ':raised_hands:': ["1f64c"],
+    ':100:': ["1f4af"],
+  }
+});
+// emojis in priorityList will show up after user typed ':'
+```
 ## Importing the default styles
 
 The plugin ships with a default styling available at this location in the installed package:
@@ -29,7 +40,7 @@ Follow the below steps to import the css file by using Webpack's `style-loader` 
       loaders: [{
         test: /\.css$/,
         loaders: [
-          'style', 'css'
+          'style-loader', 'css'
         ]
       }]
     }
@@ -41,8 +52,3 @@ Follow the below steps to import the css file by using Webpack's `style-loader` 
     import 'draft-js-emoji-plugin/lib/plugin.css';
     ```
 4. Restart Webpack.
-
-
-### Browserify Usage
-
-TODO: PR welcome

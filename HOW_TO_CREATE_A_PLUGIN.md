@@ -44,12 +44,14 @@ export default createCustomPlugin = (config) => {
 };
 ```
 
-# Supported Objects & Webhooks
+# Supported Objects & Hooks
 
-A plugin accepts all standard props that a Draft.js Editor.
+A plugin accepts all standard props the Draft.js Editor Component uses.
 
 - [blockRendererFn](https://facebook.github.io/draft-js/docs/api-reference-editor.html#blockrendererfn)
+- [keyBindingFn](https://draftjs.org/docs/advanced-topics-key-bindings.html)
 - [blockStyleFn](https://facebook.github.io/draft-js/docs/api-reference-editor.html#blockstylefn)
+- [blockRenderMap](https://draftjs.org/docs/advanced-topics-custom-block-render-map.html)
 - [customStyleMap](https://facebook.github.io/draft-js/docs/api-reference-editor.html#customstylemap)
 - [handleReturn](https://facebook.github.io/draft-js/docs/api-reference-editor.html#handlereturn)
 - [handleKeyCommand](https://facebook.github.io/draft-js/docs/api-reference-editor.html#handlekeycommand)
@@ -75,6 +77,7 @@ All functions receive an additional argument. This argument is an object contain
   getEditorState, // a function to get the current EditorState
   getReadOnly, // a function returning of the Editor is set to readOnly
   setReadOnly, // a function which allows to set the Editor to readOnly
+  getEditorRef, // a function to get the editor reference
 }
 ```
 
@@ -102,7 +105,7 @@ Usually used to clean up.
 
 ### `decorators`
 
-Draft.js allows to initialize an EditorState with a decorator. Many plugins also rely on decorators and therefor we decided
+Draft.js allows to initialize an EditorState with a decorator. Many plugins also rely on decorators and therefore we decided
 to incorporate them in the plugin architecture. Every plugin can have multiple decorators and all of them are combined by the
 plugin editor.
 
@@ -120,6 +123,21 @@ A decorator can contain a `strategy` and a `component` e.g.
 ```
 
 You can read more about it in the original Draft.js documentation about [decorators](https://facebook.github.io/draft-js/docs/advanced-topics-decorators.html#compositedecorator).
+
+If you want to implement the [DraftDecoratorType Interface](https://facebook.github.io/draft-js/docs/advanced-topics-decorators.html#beyond-compositedecorator) yourself, you can include those in your `decorators` array alongside the composite decorators. See [draft-js-simpledecorator](https://github.com/Soreine/draft-js-simpledecorator) for an example of an implementation of DraftDecoratorType. Here's an example mixed `decorators` array:
+
+```js
+{
+  decorators: [
+    {
+      strategy: hashtagStrategy,
+      component: HashtagSpan,
+    },
+    new MyCustomDraftDecoratorType('...'),
+  ],
+}
+```
+
 
 ### `getAccessibilityProps`
 

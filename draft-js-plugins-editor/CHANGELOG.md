@@ -7,7 +7,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- `onChange` & and all handlers now also receive: `getPlugins`, `getProps`, `getReadOnly`, `setReadOnly`.
+- blockStyleFn returns '' instead of false
+- `handleKeyCommand` now receives the arguments `(command, editorState, pluginFunctions)`
+- `handlePastedText` now receives the arguments `(text, html, editorState, pluginFunctions)`
+- `handleBeforeInput` now receives the arguments `(chars, editorState, pluginFunctions)`
+- `handleReturn` now receives the arguments `(event, editorState, pluginFunctions)`
+- `onChange` & and all handlers now also receive: `getPlugins`, `getProps`, `getReadOnly`, `setReadOnly`, `getEditorRef`.
+- `defaultBlockRenderMap` option, by default is set to true. If set to false the defaultBlockRenderMap from Draft.js is not used as base for the generated blockRenderMap.
+- `decorators` option now allows custom implementations the [DraftDecoratorType](https://github.com/facebook/draft-js/blob/master/src/model/decorators/DraftDecoratorType.js) interface to be passed into the array along with the traditional CompositeDecorator objects
+- added the utility function `composeDecorators` as a named export.
+- Ignore handle `blockStyleFn` in case its value is `null` . [#596](https://github.com/draft-js-plugins/draft-js-plugins/pull/596)
 
 ### Removed
 
