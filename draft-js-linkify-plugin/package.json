@@ -1,6 +1,6 @@
 {
   "name": "@massdrop/draft-js-linkify-plugin",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Linkify Plugin for DraftJS",
   "author": {
     "name": "Nik Graf",
